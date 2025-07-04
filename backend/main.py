@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 # Load your trained model
-model = YOLO("Fridge_Food.v1i.yolov8.pt")
+model = YOLO("best.pt")
 
 @app.post("/predict/")
 async def predict(file: UploadFile = File(...)):
