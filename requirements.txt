@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+numpy
+opencv_python
+ultralytics
+google-generativeai

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>snapncook</title>
+
+    <!-- Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css?v=3" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 0.5rem;">
+        <h1 style="text-align:center; margin:0;">snapncook</h1>
+      </div>
+      <p class="description" style="text-align:center; max-width: 600px; margin: 0 auto 1.5rem auto;">
+        A platform that combines real-time object detection with AI recipe generation, turning your fridge’s 
+        chaos into instant, personalized meal ideas — without typing a single word.
+      </p>
+
+      <!-- Upload Area -->
+      <div class="upload-area" id="upload-area">
+        <div class="upload-content">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <p>Drag & drop or click to upload</p>
+          <small class="upload-hint">Upload an image or use your camera</small>
+          <p id="file-info" class="file-info"></p>
+          <input type="file" id="file-input" accept="image/*" />
+          <button id="camera-btn" class="camera-btn">
+            <i class="fas fa-camera"></i> Capture from Camera
+          </button>
+        </div>
+      </div>
+
+      <!-- Camera Preview Area -->
+      <div id="camera-area" style="display:none; text-align:center;">
+        <video
+          id="camera-preview"
+          autoplay
+          playsinline
+          width="320"
+          height="240"
+          style="border:1px solid #ccc;"
+        ></video>
+        <br />
+        <button id="capture-btn" class="detect-btn" style="background: linear-gradient(90deg, #7ed957 60%, #4ecb71 100%); color: #fff; font-size: 1.15rem; font-weight: bold; border: 2.5px solid #4ecb71; box-shadow: 0 4px 16px #b2e5c6;">
+          <i class="fas fa-camera"></i> Capture
+        </button>
+        <button id="close-camera-btn" class="reset-btn">
+          <i class="fas fa-times"></i> Close
+        </button>
+      </div>
+
+      <!-- Controls (Detect + Reset) -->
+      <div class="controls">
+        <!-- Detect Button -->
+        <button id="detect-btn" class="detect-btn">
+          <i class="fas fa-search"></i> Detect Objects
+        </button>
+
+        <!-- Reset Button -->
+        <button id="reset-btn" class="reset-btn">
+          <i class="fas fa-rotate-left"></i> Reset
+        </button>
+      </div>
+
+      <!-- Status Message -->
+      <div id="status" class="status" style="display: none"></div>
+
+      <!-- Output Preview -->
+      <div class="results">
+        <img id="preview" alt="Detection result" />
+      </div>
+
+      <!-- Detected Objects List -->
+      <div id="detected-objects-section" style="display:none;">
+        <h3>Detected Objects:</h3>
+        <ul id="detected-objects"></ul>
+        <button id="generate-recipe" class="detect-btn" disabled>Generate Recipe</button>
+      </div>
+
+      <!-- Recipe Result -->
+      <div id="recipe-result" style="display:none;">
+        <h3>Suggested Recipe:</h3>
+        <div id="recipe-text"></div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/static/script.js"></script>
+  </body>
+</html>

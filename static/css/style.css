@@ -1,0 +1,61 @@
+body, .container, .upload-area, .results, #recipe-result, .status, .description, .controls, .file-info, .upload-hint, #detected-objects-section, #recipe-text, .upload-content, .camera-btn, .detect-btn, .reset-btn {
+  font-family: 'Poppins', 'Segoe UI', 'Roboto', Arial, sans-serif !important;
+}
+
+.recipe-box, #recipe-result {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px 0 rgba(42,122,226,0.13), 0 1.5px 6px 0 rgba(0,0,0,0.08);
+  padding: 2rem 2.2rem 1.5rem 2.2rem;
+  margin: 2rem auto 1rem auto;
+  max-width: 600px;
+  color: #222;
+  border: 1.5px solid #e0e0e0;
+  position: relative;
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+#recipe-result:hover {
+  box-shadow: 0 8px 32px 0 rgba(42,122,226,0.18), 0 4px 16px 0 rgba(0,0,0,0.10);
+  transform: translateY(-4px) scale(1.015);
+  border-color: #2a7ae2;
+}
+#recipe-result h2 {
+  font-size: 2rem;
+  color: #2a7ae2;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+#recipe-result h3 {
+  font-size: 1.15rem;
+  color: #444;
+  margin-top: 1.3rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.2rem;
+}
+#recipe-result ul, #recipe-result ol {
+  margin: 0 0 1.1rem 1.3rem;
+  padding: 0;
+}
+#recipe-result li {
+  margin-bottom: 0.35rem;
+  font-size: 1.04rem;
+  line-height: 1.6;
+  background: #f7faff;
+  border-radius: 5px;
+  padding: 0.22em 0.8em;
+  margin-right: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(42,122,226,0.05);
+}
+#recipe-result ol {
+  list-style-type: decimal;
+}
+#recipe-result ul {
+  list-style-type: disc;
+}
+#recipe-result {
+  border: 1.5px solid #e0e0e0;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+}
