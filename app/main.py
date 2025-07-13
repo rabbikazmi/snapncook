@@ -18,8 +18,8 @@ load_dotenv(dotenv_path=Path(__file__).parent / '.env')
 
 import google.generativeai as genai
 
-from .model_loader import load_models
-from .image_processor import process_image
+from model_loader import load_models
+from image_processor import process_image
 
 # load environment variables from .env in app directory 
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
