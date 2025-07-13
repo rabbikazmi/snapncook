@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // DOM Elements
   const fileInput = document.getElementById("file-input");
+  const fileBtn = document.getElementById("file-btn");
   const uploadArea = document.getElementById("upload-area");
   const detectBtn = document.getElementById("detect-btn");
   const resetBtn = document.getElementById("reset-btn");
@@ -16,14 +17,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const generateRecipeBtn = document.getElementById("generate-recipe");
   const recipeResult = document.getElementById("recipe-result");
   const recipeText = document.getElementById("recipe-text");
+  const fileInfo = document.getElementById("file-info");
 
   let currentStreamUrl = "";
   let cameraStream = null;
   let lastDetectedObjects = [];
 
-  //  Upload Area Interactions
-  uploadArea.addEventListener("click", () => fileInput.click());
+  // Fix: Only trigger file input on specific button click, not entire upload area
+  fileBtn.addEventListener("click", (e) => {
+    e.stopPropagation(); // Prevent event bubbling to upload area
+    fileInput.click();
+  });
 
+  // Upload Area Interactions - keep for drag and drop functionality
   uploadArea.addEventListener("dragover", (e) => {
     e.preventDefault();
     uploadArea.classList.add("active");
@@ -48,15 +54,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // Camera Capture Logic 
   cameraBtn.addEventListener("click", async (e) => {
     e.stopPropagation();
-    // Hide upload area, show camera area
-    uploadArea.style.display = "none";
-    cameraArea.style.display = "block";
-    preview.style.display = "none";
     try {
+      // Hide upload area, show camera area
+      uploadArea.style.display = "none";
+      cameraArea.style.display = "block";
+      preview.style.display = "none";
+      
+      // Show camera controls
+      cameraPreview.style.display = "block";
+      captureBtn.style.display = "inline-block";
+      closeCameraBtn.style.display = "inline-block";
+      
       cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
       cameraPreview.srcObject = cameraStream;
-      cameraPreview.play();
+      await cameraPreview.play();
     } catch (err) {
+      console.error("Camera error:", err);
       showStatus("Camera access denied or not available.", "error");
       cameraArea.style.display = "none";
       uploadArea.style.display = "block";
@@ -77,14 +90,18 @@ document.addEventListener("DOMContentLoaded", () => {
           dataTransfer.items.add(file);
           fileInput.files = dataTransfer.files;
           handleFileChange();
+          
           // Hide camera, show upload area
           cameraArea.style.display = "none";
           uploadArea.style.display = "block";
+          
+          // Hide camera controls
+          cameraPreview.style.display = "none";
+          captureBtn.style.display = "none";
+          closeCameraBtn.style.display = "none";
+          
           // Stop camera
-          if (cameraStream) {
-            cameraStream.getTracks().forEach((track) => track.stop());
-            cameraStream = null;
-          }
+          stopCamera();
         }
       },
       "image/jpeg"
@@ -95,11 +112,22 @@ document.addEventListener("DOMContentLoaded", () => {
     cameraArea.style.display = "none";
     uploadArea.style.display = "block";
     preview.style.display = "none";
+    
+    // Hide camera controls
+    cameraPreview.style.display = "none";
+    captureBtn.style.display = "none";
+    closeCameraBtn.style.display = "none";
+    
+    stopCamera();
+  });
+
+  // Helper function to stop camera stream
+  function stopCamera() {
     if (cameraStream) {
       cameraStream.getTracks().forEach((track) => track.stop());
       cameraStream = null;
     }
-  });
+  }
 
   // Detect Button Logic 
   detectBtn.addEventListener("click", async () => {
@@ -110,7 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Hide upload area on detect
     uploadArea.style.display = "none";
     preview.style.display = "none";
-    preview.src = "";
     statusDiv.style.display = "none";
     detectedObjectsSection.style.display = "none";
     recipeResult.style.display = "none";
@@ -161,9 +188,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const blob = await response.blob();
-      const detectedURL = URL.createObjectURL(blob);
-
-      preview.src = detectedURL;
+      if (currentStreamUrl) {
+        URL.revokeObjectURL(currentStreamUrl);
+      }
+      currentStreamUrl = URL.createObjectURL(blob);
+      preview.src = currentStreamUrl;
       preview.style.display = "block";
       showStatus("Detection completed!", "success");
     } catch (error) {
@@ -175,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-// Generate Recipe Button Logic
+  // Generate Recipe Button Logic
   generateRecipeBtn.addEventListener("click", async () => {
     if (!lastDetectedObjects.length) return;
     generateRecipeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
@@ -212,32 +241,90 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Reset Button Logic 
+  // Improved Reset Button Logic 
   resetBtn.addEventListener("click", () => {
+    // Clear file input
     fileInput.value = "";
-    preview.src = "";
-    preview.style.display = "none";
+    
+    // Hide and clear preview image
+    if (preview.src) {
+      if (currentStreamUrl) {
+        URL.revokeObjectURL(currentStreamUrl);
+        currentStreamUrl = "";
+      }
+      preview.src = "";
+      preview.style.display = "none";
+    }
+    
+    // Hide status message
     statusDiv.style.display = "none";
-    uploadArea.style.display = "block"; // Show upload area again
-    currentStreamUrl = "";
-    document.getElementById("file-info").textContent = "";
+    
+    // Show upload area again
+    uploadArea.style.display = "block";
+    
+    // Clear file info
+    fileInfo.textContent = "";
+    
+    // Hide detected objects section
+    detectedObjectsSection.style.display = "none";
+    
+    // Clear detected objects list
+    detectedObjectsList.innerHTML = "";
+    
+    // Reset detected objects array
+    lastDetectedObjects = [];
+    
+    // Hide recipe result section
+    recipeResult.style.display = "none";
+    
+    // Clear recipe text
+    recipeText.textContent = "";
+    recipeText.innerHTML = "";
+    
+    // Disable generate recipe button
+    generateRecipeBtn.disabled = true;
+    
+    // Ensure camera is closed if it was open
+    stopCamera();
+    
+    // Hide camera area and controls
+    cameraArea.style.display = "none";
+    cameraPreview.style.display = "none";
+    captureBtn.style.display = "none";
+    closeCameraBtn.style.display = "none";
+    
+    showStatus("Reset completed. Ready for a new image.", "success");
+    setTimeout(() => {
+      statusDiv.style.display = "none";
+    }, 2000);
   });
 
-  // File Change Handler 
+  // File Change Handler - Improved
   function handleFileChange() {
     const file = fileInput.files[0];
-    document.getElementById("file-info").textContent = file
-      ? `${file.name} (${(file.size / 1024).toFixed(2)} KB)`
-      : "";
     if (!file) return;
-    preview.style.display = "none";
-    preview.src = "";
-    const url = URL.createObjectURL(file);
-    preview.src = url;
+    
+    // Update file info display
+    fileInfo.textContent = `${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+    
+    // Clear previous preview
+    if (preview.src && currentStreamUrl) {
+      URL.revokeObjectURL(currentStreamUrl);
+    }
+    
+    // Create and display new preview
+    currentStreamUrl = URL.createObjectURL(file);
+    preview.src = currentStreamUrl;
     preview.style.display = "block";
+    
+    // Reset detection results when new file is selected
+    detectedObjectsSection.style.display = "none";
+    detectedObjectsList.innerHTML = "";
+    recipeResult.style.display = "none";
+    lastDetectedObjects = [];
   }
 
-  //  Status Display Helper 
+  // Status Display Helper 
   function showStatus(message, type) {
     statusDiv.textContent = message;
     statusDiv.className = `status ${type}`;
@@ -246,6 +333,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Cleanup on Unload 
   window.addEventListener("beforeunload", () => {
-    if (preview.src) URL.revokeObjectURL(preview.src);
+    if (currentStreamUrl) {
+      URL.revokeObjectURL(currentStreamUrl);
+    }
+    stopCamera();
   });
 });
+
+
+//website responsiveness
+

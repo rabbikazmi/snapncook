@@ -8,93 +8,248 @@
     <!-- Styles -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/style.css?v=3" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Coiny&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css?v=3" />
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   </head>
 
   <body>
-    <div class="container">
-      <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 0.5rem;">
-        <h1 style="text-align:center; margin:0;">snapncook</h1>
-      </div>
-      <p class="description" style="text-align:center; max-width: 600px; margin: 0 auto 1.5rem auto;">
-        A platform that combines real-time object detection with AI recipe generation, turning your fridge’s 
-        chaos into instant, personalized meal ideas — without typing a single word.
-      </p>
 
-      <!-- Upload Area -->
-      <div class="upload-area" id="upload-area">
-        <div class="upload-content">
+    <!--Navigation Bar-->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="" class="nav-logo">
+          <img src="/static/images/logo.png" alt="snapncook logo" class="logo-img"/> Snap&amp;Cook</a>
+        <ul class="nav-menu">
+          <li class="hideOnMoble"><a href="#hero">Home</a></li>
+          <li class="hideOnMoble"><a href="#about">About</a></li>
+          <li class="hideOnMoble"><a href="#feature">Features</a></li>
+          <li class="hideOnMoble"><a href="#contact">Contact Us</a></li>
+        </ul>
+        <label  for="" class="icons" onclick=showSideMenu()>
+          <i class='bx bx-menu'></i>
+        </label>
+        <ul class="sidebar">
+          <li class="cross" onclick=hideSideBar()><i class='fas fa-close'></i></li>
+          <li><a href=""></a></li>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#feature">Features</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">Snap &amp; Cook</h1>
+        <p class="hero-description">
+          Snap a picture of your ingredients and get instant recipe suggestions!
+        </p>
+        <a href="#upload-area" class="hero-button">Get Started</a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+      <div class="about-container" id="about-container">
+        <h2 class="about-title">Effortless Meal Planning</h2>
+        <div class="about-description">
+          <div>
+            <h3>Personalized Recipe</h3>
+            <p>
+            Tired of staring into your fridge wondering what to cook? 
+            With Snap and Cook, you'll never have to worry about what to make ever again.
+            Simply snap a photo of your fridge, and our advanced AI algorithm will analyze the ingredients 
+            and generate personalized recipe suggestions tailored to your unique 
+            taste preferences and dietary restrictions.
+          </p>
+          </div>
+          <img class="abt-img" src="/static/images/abt-img.png" alt="image">
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works Section -->
+    <section class="how" id="how">
+      <div class="how-container">
+        <h2 class="how-title">How it Works?</h2>
+        <div class="how-list">
+          <div class="how-item">
+            <i class="fas fa-camera"></i><br>
+            <h3>Capture Ingredients</h3>
+            <p>Click a picture of your Fridge and upload.</p>
+          </div>
+          <div class="how-item">
+            <i class="fas fa-search"></i><br>
+            <h3>Instant Recipes</h3>
+            <p>AI detects the ingredients in the photo.</p>
+          </div>
+          <div class="how-item">
+            <i class="fas fa-utensils"></i><br>
+            <h3>Personalized Suggestions</h3>
+            <p>Give instant recipe suggestions based on the detected ingredients.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="why" id="feature">
+        <div class="why-container">
+          <h2>What makes us special?</h2>
+          <div class="card-wrapper">
+            <div class="why-card">
+              <i class="fas fa-bolt"></i>
+              <p>Fast, no-typing recipe ideas</p>
+            </div>
+            <div class="why-card">
+              <i class="fas fa-leaf"></i>
+              <p>Reduces food waste</p>
+            </div>
+            <div class="why-card">
+              <i class="fas fa-brain"></i>
+              <p>AI-powered, always learning</p>
+            </div>
+            <div class="why-card">
+              <i class="fas fa-mobile-alt"></i>
+              <p>Works on any device</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <!-- Upload Area -->
+    <div class="upload-area" id="upload-area">
+      <h2 class="upload-title">Generate Your Recipe here <i class="fas fa-utensils"></i></h2>
+
+      <div class="upload-content">
+
+        <div class="upload-instructions">
           <i class="fas fa-cloud-upload-alt"></i>
-          <p>Drag & drop or click to upload</p>
+          <p>Drag &amp; drop or click the buttons below</p>
           <small class="upload-hint">Upload an image or use your camera</small>
-          <p id="file-info" class="file-info"></p>
-          <input type="file" id="file-input" accept="image/*" />
+        </div>
+
+        <div class="upload-buttons">
+          <div class="file-uploaded">
+            <div id="file-info" class="file-info"></div>
+          </div>
+          <button id="file-btn" class="file-btn">
+            <i class="far fa-arrow-alt-circle-up"></i> Upload from gallery
+          </button>
+          <input type="file" id="file-input" class="file-input" accept="image/*" style="display: none;" />
+          
           <button id="camera-btn" class="camera-btn">
-            <i class="fas fa-camera"></i> Capture from Camera
+            <i class="fas fa-camera"></i> Camera
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Camera Preview Area -->
-      <div id="camera-area" style="display:none; text-align:center;">
+    <!-- Camera Preview Area -->
+    <div class="camera-area" id="camera-area" style="display: none;">
+      <div class="video-pre">
         <video
-          id="camera-preview"
-          autoplay
-          playsinline
-          width="320"
-          height="240"
-          style="border:1px solid #ccc;"
-        ></video>
-        <br />
-        <button id="capture-btn" class="detect-btn" style="background: linear-gradient(90deg, #7ed957 60%, #4ecb71 100%); color: #fff; font-size: 1.15rem; font-weight: bold; border: 2.5px solid #4ecb71; box-shadow: 0 4px 16px #b2e5c6;">
+          id="camera-preview" autoplay playsinline width="320" height="240" style="display: none">
+        </video>
+      </div>
+      <div class="preview-btn">
+        <button id="capture-btn" class="detect-btn" style="display: none;">
           <i class="fas fa-camera"></i> Capture
         </button>
-        <button id="close-camera-btn" class="reset-btn">
+        <button id="close-camera-btn" class="reset-btn" style="display: none;">
           <i class="fas fa-times"></i> Close
         </button>
       </div>
+    </div>
 
-      <!-- Controls (Detect + Reset) -->
-      <div class="controls">
-        <!-- Detect Button -->
-        <button id="detect-btn" class="detect-btn">
-          <i class="fas fa-search"></i> Detect Objects
-        </button>
+    <!-- Controls (Detect + Reset) -->
+    <div class="controls">
+      <!-- Detect Button -->
+      <button id="detect-btn" class="detect-btn">
+        <i class="fas fa-search"></i> Detect Objects
+      </button>
 
-        <!-- Reset Button -->
-        <button id="reset-btn" class="reset-btn">
-          <i class="fas fa-rotate-left"></i> Reset
-        </button>
-      </div>
+      <!-- Reset Button -->
+      <button id="reset-btn" class="reset-btn">
+        <i class="fas fa-rotate-left"></i> Reset
+      </button>
+    </div>
 
+    <!-- result-->
+    <div class="output-container">
       <!-- Status Message -->
-      <div id="status" class="status" style="display: none"></div>
+      <div id="status" class="status" style="display: none;"></div>
 
       <!-- Output Preview -->
       <div class="results">
-        <img id="preview" alt="Detection result" />
+        <img id="preview" style="display: none;"/>
       </div>
 
       <!-- Detected Objects List -->
-      <div id="detected-objects-section" style="display:none;">
-        <h3>Detected Objects:</h3>
-        <ul id="detected-objects"></ul>
-        <button id="generate-recipe" class="detect-btn" disabled>Generate Recipe</button>
+      <div class="detected-objects-section" id="detected-objects-section" style="display:none">
+        <h3>Detected Items:</h3>
+        <ul class="detected-objects" id="detected-objects"></ul>
+        <div class="generate-btn">
+          <button id="generate-recipe" class="detect-btn" disabled>Generate Recipe</button>
+        </div>
       </div>
 
       <!-- Recipe Result -->
-      <div id="recipe-result" style="display:none;">
+      <div class="recipe-result" id="recipe-result" style="display:none">
         <h3>Suggested Recipe:</h3>
-        <div id="recipe-text"></div>
+        <div class="recipe-text" id="recipe-text"></div>
       </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="footer-navbar" id="contact">
+      <div class="footer-content">
+          <a href="https://github.com/Twizzera/snapncook" target="_blank" rel="noopener" title="GitHub" class="footer-icon">
+            <i class="fab fa-github"></i>
+          </a>
+        <span class="footer-text">Made with <i class="fas fa-heart"></i> by SnapnCook Team</span>
+      </div>
+    </footer>
     <!-- JavaScript -->
     <script src="/static/script.js"></script>
+    <script>
+      //responsive sidebar
+      function showSideMenu(){
+        const sidebar= document.querySelector(".sidebar")
+        sidebar.style.display='flex';
+      }
+
+      function hideSideBar(){
+        const sidebar=document.querySelector(".sidebar")
+        sidebar.style.display="none";
+      }
+
+      // Smooth scroll for nav links
+      document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href.startsWith('#')) {
+            e.preventDefault();
+            document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      document.querySelectorAll('.hero-content a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href.startsWith('#')) {
+            e.preventDefault();
+            document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+    </script>
   </body>
 </html>
