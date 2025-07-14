@@ -1,4 +1,5 @@
 <h1 align="center">🍳 snapncook</h1>
+<p align="center"><i>Snap What You Have, Cook What You Can.</i><p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.10+-blue?logo=python" />
