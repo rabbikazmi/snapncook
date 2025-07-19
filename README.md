@@ -1,4 +1,4 @@
-<h1 align="center">🍳 snapncook</h1>
+<h1 align="center">🍳 SnapNCook</h1>
 <p align="center"><i>Snap What You Have, Cook What You Can.</i><p>
 
 <p align="center">
